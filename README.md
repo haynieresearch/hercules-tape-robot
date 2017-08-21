@@ -64,6 +64,7 @@ CONSOLE
 
 #### Step 4
 Update and set the configuration file accordingly, here are the variables to set:
+```
 	hostserver:	this is the server that Hercules is running in. You can set 
 			this to your FQDN or localhost in most cases.
 	consoleport:	N/A
@@ -78,17 +79,20 @@ Update and set the configuration file accordingly, here are the variables to set
 	hercbin:	N/A
 	lparname:	N/A
 	logdir:		N/A
+```
 
 #### Step 5
 Once you have everything configured, you will need to re-IPL your system to enable the
 new console. After Hercules is running you can activate the tape robot and give it a try.
 Here is how I startup my system so you have an idea of what I am doing:
+```
 	First:	Login to a terminal session (TTY1) and fire up Hercules
 	Second:	Start a second terminal session (TTY2) and get a console connected as my
 		primary console.
 	Third:	Start a third terminal session (TTY3) and start the tape robot only after
 		Hercules is running and can accept connections to the printer port.
 	Last:	IPL the system!
+```
 
 ### Notes
 The script is pretty simple in what it does. When it receives a message from the console
