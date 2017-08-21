@@ -35,11 +35,17 @@ You will need a line printer setup in Hercules to read the mount commands from
 your host operating system. This script uses a sockdev printer, and I default my 
 port to 1403. You can assign any hardware address that fits your setup, but for 
 the purposes of this script we will assume 000E. Place the following text in your 
-Hercules configuration file: “000E	1403	1403 sockdev”
+Hercules configuration file: 
+```
+"000E	1403	1403 sockdev"
+```
 
 #### Step 2
 Setup some hardware addresses for your tape, here is what I have in my Hercules
-configuration file: “0580.10	3490	*”
+configuration file: 
+```
+"0580.10	3490	*"
+```
 
 #### Step 3
 You will need to setup a new console in your host operating system. It will need
