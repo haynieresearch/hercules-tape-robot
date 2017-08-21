@@ -1,33 +1,21 @@
-#**********************************************************
-#* CATEGORY    APPLICATIONS                               
-#* GROUP       MAINFRAME                                  
-#* AUTHOR      LANCE HAYNIE <LHAYNIE@HAYNIEMAIL.COM>       
-#* DATE        2015-08-31                                  
-#* PURPOSE     TAPE ROBOT README                    
-#**********************************************************
-#* MODIFICATIONS                                           
-#* 2015-08-31 - LHAYNIE - INITIAL VERSION                  
-#**********************************************************
-
+# Hercules Tape Robot
 You will need to read this section completely before using this script
 to ensure that everything works as designed. There is no other documentation
 other than this README file. Please note: this script comes with no support.
 Furthermore, this script is released under the GNU General Public License v2.0.
 License text is provided in the LICENSE file.
 
-#**********************************************************
-# ASSUMPTIONS
-#**********************************************************
+### Assumptions
 This script makes a couple of assumptions, I will list them below and you can
 either update/install what is needed on your system or make the required changes.
 
--This script will live in the root directory of your host operating system.
--That your configuration file is located in conf/ relative to the script.
--That you have a directory dedicated to emulated tape files.
--You have the logger application to interface with the syslog installed.
--You have the HTTPPORT set to 8081 and with NOAUTH enabled in Hercules.
--You have Lynx installed on your system.
--You have Netcat installed on your system.
+* This script will live in the root directory of your host operating system.
+* That your configuration file is located in conf/ relative to the script.
+* That you have a directory dedicated to emulated tape files.
+* You have the logger application to interface with the syslog installed.
+* You have the HTTPPORT set to 8081 and with NOAUTH enabled in Hercules.
+* You have Lynx installed on your system.
+* You have Netcat installed on your system.
 
 Note: I am going to include my current setup and layout as an example. There are
 two other scripts (startup.sh and console.sh) that I use for starting up my system
@@ -41,34 +29,34 @@ source/compile.sh.
 P.S.: This system is far from perfect, if you make some enhancements or have any ideas please
 feel free to share them.
 
-#**********************************************************
-# SETUP
-#**********************************************************
-STEP01:
+### Setup
+#### Step 1
 You will need a line printer setup in Hercules to read the mount commands from
 your host operating system. This script uses a sockdev printer, and I default my 
 port to 1403. You can assign any hardware address that fits your setup, but for 
 the purposes of this script we will assume 000E. Place the following text in your 
 Hercules configuration file: “000E	1403	1403 sockdev”
 
-STEP02:
+#### Step 2
 Setup some hardware addresses for your tape, here is what I have in my Hercules
 configuration file: “0580.10	3490	*”
 
-STEP03:
+#### Step 3
 You will need to setup a new console in your host operating system. It will need
 to be set to ROUTCODE(3), unless you want a ton of messages sent to your log.
 This particular route code will send all the tape messages to the 1403 printer.
 In MVS, navigate to your PARMLIB PDS and edit the CONSOL00 member. Here is what I
 added to my system:
 
+```
 CONSOLE
   DEVNUM(000E)
   NAME(L00E)
   ROUTCODE(3)
   UNIT(1403)
+```
 
-STEP04:
+#### Step 4
 Update and set the configuration file accordingly, here are the variables to set:
 	hostserver:	this is the server that Hercules is running in. You can set 
 			this to your FQDN or localhost in most cases.
@@ -85,7 +73,7 @@ Update and set the configuration file accordingly, here are the variables to set
 	lparname:	N/A
 	logdir:		N/A
 
-STEP05:
+#### Step 5
 Once you have everything configured, you will need to re-IPL your system to enable the
 new console. After Hercules is running you can activate the tape robot and give it a try.
 Here is how I startup my system so you have an idea of what I am doing:
@@ -96,9 +84,7 @@ Here is how I startup my system so you have an idea of what I am doing:
 		Hercules is running and can accept connections to the printer port.
 	Last:	IPL the system!
 
-#**********************************************************
-# NOTES
-#**********************************************************
+### Notes
 The script is pretty simple in what it does. When it receives a message from the console
 mount a tape, it sends a command to Hercules via the integrated web page to mount the VOLSER
 at the proper hardware address. If the VOLSER that is requested does not exist, it will
